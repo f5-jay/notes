@@ -1,4 +1,4 @@
-# Machine Config Stuck - ROM-OSTree Failed
+# Machine Config Stuck - RPM-OSTree Failed
 
 
 Any node that ends up in this situation will need manual intervention. Zincati cannot auto-update out of it, as rpm-ostreed is not available.
