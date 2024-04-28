@@ -19,5 +19,5 @@ bridge.multicast-snooping:              yes
 To disable multicast-snooping:
 
 ```
-nmcli connection modify archie0 multicast-snooping no
+nmcli connection modify <bridge0> multicast-snooping no
 ```
