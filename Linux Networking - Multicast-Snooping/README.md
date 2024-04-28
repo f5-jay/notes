@@ -1,62 +1,23 @@
-# SRIOV
+# Multicast Snooping
 
-Useful Resources
-- https://www.reddit.com/r/VFIO/comments/tqhld9/iommu_sriovnoob_understanding_why_pciassignbusses/
-- https://lenovopress.lenovo.com/lp1467.pdf
+Linux bridge interfaces, by default, have multicast snooping enabled by default.  This turns out to be problematic when it comes to receiving external IPv6 Neighbor Discovery (ND) packets and forwarding them as a general network switch should do, consequently disrupting IPv6 communications between two network hosts through the switch.
 
-IOMMU (Input-Output Memory Management Unit)
-
-Requires VT-d to be enabled in the BIOS and explicitly enabled in the Linux Kernel. To do so, pass either intel_iommu=on (for Intel systems) or amd_iommu=on (for AMD systems) added to the kernel command line. In addition it is recommended to use iommu=pt option which improves IO performance for devices in the host.
-
-Once the system boots up, check the contents of /sys/kernel/iommu_groups/ directory. 
+Disabling Multicast Snopping on the bridge interface allows for the IPv6 Network Discovery to flood out all network connections to bridge interface, (in my case to dual-stacked IPv4/IPv6 KVM guests attached to the bridge).
 
 
-To determine if the system CPU architecture is Intel or AMD:
+
+Here is how to see the current Multicast Snooping settings:
 
 ```
-lscpu
+nmcli connection show <bridge0> | grep multicast-snooping
 ```
-
-Add either GRUB option (depending on CPU architecture to GRUB_CMDLINE_LINUX_DEFAULT:
-
-intel_iommu=on  
-amd_iommu=on
+root@ubuntu:~# nmcli connection show bridge-0 | grep multicast-snooping
+bridge.multicast-snooping:              yes
 
 
-OTHER OPTIONS:
 
-iommu=pt
-NOTE: iommu=pt turns on iommu tagging only for devices configured for pass through, allowing the host to ignore it for local host-only devices. 
-
-
-ixgbe.max_vfs=16 
-pci=realloc,assign-busses,nocrs
-pcie_acs_override=downstream
-
+To disable multicast-snooping:
 
 ```
-dmesg | grep -i iommu
+nmcli connection modify archie0 multicast-snooping no
 ```
-
-```
-dmesg | grep 'IOMMU enabled'
-```
-
-To determin if IOMMU is enabled:
-
-```
-dmesg | grep -e DMAR -e IOMMU
-```
-
-Hereby driver kvm maps to "kernel_irqchip=on" and driver qemu maps to "kernel_irqchip=split".
-
- <features>
-   <ioapic driver='kvm'/>
- </features>
-
-  <qemu:commandline>
-    <qemu:arg value='-device'/>
-    <qemu:arg value='intel-iommu'/>
-    <qemu:arg value='intremap=on' />
-    <qemu:arg value='caching=on' />
-  </qemu:commandline>
