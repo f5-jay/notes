@@ -3,6 +3,7 @@
 Useful Resources
 - https://www.reddit.com/r/VFIO/comments/tqhld9/iommu_sriovnoob_understanding_why_pciassignbusses/
 - https://lenovopress.lenovo.com/lp1467.pdf
+- https://gist.github.com/mcastelino/08f6e49f2faba295eb690a3a8ee44c70
 
 IOMMU (Input-Output Memory Management Unit)
 
