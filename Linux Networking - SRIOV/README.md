@@ -57,6 +57,12 @@ To determin if IOMMU is enabled:
 dmesg | grep -e DMAR -e IOMMU
 ```
 
+
+To Identify all IOMMU Groups (run as root):
+```
+for d in $(find /sys/kernel/iommu_groups/ -type l | sort -n -k5 -t/); do n=${d#*/iommu_groups/*}; n=${n%%/*}; printf 'IOMMU Group %s ' "$n"; lspci -nns "${d##*/}"; done;
+```
+
 Hereby driver kvm maps to "kernel_irqchip=on" and driver qemu maps to "kernel_irqchip=split".
 
  <features>
