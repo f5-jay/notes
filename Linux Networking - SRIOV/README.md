@@ -37,12 +37,11 @@ NOTE: iommu=pt turns on iommu tagging only for devices configured for pass throu
 pcie_acs_override=downstream
 ```
 NOTE: Splits the NIC into two
-```
 
+```
 ixgbe.max_vfs=16 
 pci=realloc,assign-busses,nocrs
-pcie_acs_override=downstream
-
+```
 
 ```
 dmesg | grep -i iommu
