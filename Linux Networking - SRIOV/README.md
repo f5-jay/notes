@@ -65,13 +65,16 @@ for d in $(find /sys/kernel/iommu_groups/ -type l | sort -n -k5 -t/); do n=${d#*
 
 Hereby driver kvm maps to "kernel_irqchip=on" and driver qemu maps to "kernel_irqchip=split".
 
+```
  <features>
    <ioapic driver='kvm'/>
  </features>
-
+```
+```
   <qemu:commandline>
     <qemu:arg value='-device'/>
     <qemu:arg value='intel-iommu'/>
     <qemu:arg value='intremap=on' />
     <qemu:arg value='caching=on' />
   </qemu:commandline>
+```
