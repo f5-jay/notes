@@ -78,3 +78,14 @@ Hereby driver kvm maps to "kernel_irqchip=on" and driver qemu maps to "kernel_ir
     <qemu:arg value='caching=on' />
   </qemu:commandline>
 ```
+
+```
+  <features>
+    <ioapic driver="qemu"/>
+  </features>
+```
+```
+    <iommu model="intel">
+      <driver intremap="on" caching_mode="on" eim="on"/>
+    </iommu>
+```
