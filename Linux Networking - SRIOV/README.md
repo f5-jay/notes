@@ -19,15 +19,25 @@ lscpu
 
 Add either GRUB option (depending on CPU architecture to GRUB_CMDLINE_LINUX_DEFAULT:
 
+```
 intel_iommu=on  
+```
+```
 amd_iommu=on
-
+```
 
 OTHER OPTIONS:
 
+```
 iommu=pt
+```
 NOTE: iommu=pt turns on iommu tagging only for devices configured for pass through, allowing the host to ignore it for local host-only devices. 
 
+```
+pcie_acs_override=downstream
+```
+NOTE: Splits the NIC into two
+```
 
 ixgbe.max_vfs=16 
 pci=realloc,assign-busses,nocrs
